@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Quiz App</title>
+		<link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/3.0.2/normalize.css">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="./styles/main.css">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="./apps/app.js"></script>
+	</head>
+	<body>
+		<section id="opening">
+			<h1>Welcome to Quiz App</h1>
+			<button>Click here to play</button>
+		</section>				
+		<section id="problem-section">
+			<div class="question">
+			</div>
+			<div class="answerChoices">
+			</div>
+			<form id="answerForm">
+			</form>
+			<p id="feedback">Your response is <strong id="result"></strong>. The correct answer is <strong id="correctAnswer"></strong></p>
+			<button type="button" name="next"> Go to next question <i class="fa fa-arrow-right"></i></button>
+			
+		</section>	
+			
+		<section id="endGame">
+			<p>Game Over.</p>
+			<p>Do you wish to play again?</p>
+			<button type="button" name="play-again" value="Yes">Yes</button>
+			<button type="button" name="quit" value="No">No</button>
+		</section>
+		<section id="stats">
+			<hr>
+			<p>You answered <span id="numCompleted">0</span> out of the <span id="total">0</span> problems.</p>
+			<p>You answered <span id="numCorrect">0</span> problem(s) correctly.</p>  
+		</section> 
+
+	</body>
+</html>
