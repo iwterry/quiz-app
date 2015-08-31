@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	$("#opening button").click(function() {
-		$("#opening").css("display", "none"); // hide the opening message
+		 // hide the opening message and show section that will contain the problems and allow user to solve them 
+		$("#opening").css("display", "none");
+		$("#problem-section").css("display", "block"); 
 		
 		// create the problems the user will need to solve
 		var quizProblem1 = new quizProblem("How old am I?", [22, 23, 16, 27], 27); 

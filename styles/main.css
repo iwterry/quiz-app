@@ -1,18 +1,23 @@
 #opening {
-	width: 25em;
-    margin: 10em auto;
+	width: 40%;
+	min-width: 16em;
+	height: 20em; 
+    margin: 8em auto 0em auto;
     text-align: center;
 	background-color: black; 
+	padding-top: 2em; 
 }
 
 #opening h1 {
-	padding-top: 2em; 
 	color: white; 
+	font-size: 2em; 
+	width: 80%;
+	margin: 0em auto; 
 }
 
 #opening button {
 	width: 7em; 
-	margin-top: 2em; 
+	margin-top: 2em;
 	font-size: 1.5em; 
 	background-color: white; 
 	color: blue; 
@@ -20,7 +25,6 @@
     border-radius: 100% / 100%;
 	border: none; 
 	font-weight: bold; 
-	margin-bottom: 3em; 
 }
 
 #opening button:hover {
@@ -30,7 +34,7 @@
 
 #problem-section {
 	padding: 3em;
-	display: block; 
+	display: none; 
 	width: 60%; 
 	margin: 2em auto; 
 }
