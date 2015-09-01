@@ -55,11 +55,12 @@ h1 {
 	border: 1px solid black; 
 	padding: 2em; 
 	display: none; 
+	background-color: #F6F6F6;
 }
 
 
 button[name=next] {
-	margin-top: 2em; 
+	margin-bottom: 2em; 
 	display: none; 
 	float: right; 
 }
@@ -70,7 +71,7 @@ button[name=next] {
 	text-align: center; 
 	margin: 3em auto; 
 	display: none; 
-	border: 1px dotted black; 
+	border: 1px solid black; 
 }
 
 #endGame button {
@@ -86,5 +87,8 @@ hr {
 #stats {
 	display: none;
 	text-align: center;
+	border: 3px dotted black;
+	width: 18em;
+	margin: 0em auto;
 }
 

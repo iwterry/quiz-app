@@ -202,7 +202,9 @@ function startQuiz(problems) {
 		console.log(userChoice);
 		
 		if(index === numOfProblems-1) { // the user went through all the problems 
-			$("#endGame").fadeIn(5000);
+			$("#endGame").fadeIn(7000, function() {
+				this.scrollIntoView();
+			});
 			index  = 0; // reset 
 		}
 		else { // all user to go next problem by clicking a button
