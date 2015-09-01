@@ -195,23 +195,33 @@ function startQuiz(problems) {
 	$("#answerForm").submit(function(event) {
 		event.preventDefault(); 
 		
-		$("#answerForm").find("input[type='submit']").css("display", "none"); 
-		$("#answerForm").find("select").attr("disabled", true); 
+		// gets the letter choice the user selected 
+		userChoice = $("select option:selected").val(); 
 		
-		$("#numCompleted").html(index+1); // update the number of problems that the user completed 
-		userChoice = $("select option:selected").val(); // gets the letter choice the user selected 
-		showFeedback(userChoice, correctChoice);
-		
-		console.log(userChoice);
-		
-		if(index === numOfProblems-1) { // the user completed all the problems 
-			$("#endGame").fadeIn(7000, function() {
-				this.scrollIntoView();
-			});
-			index  = 0; // reset 
+		if (userChoice !== '') { // the user did select an answer choice
+			// do not allow the user to press submit again or change an option from the select element
+			$("#answerForm").find("input[type='submit']").css("display", "none"); 
+			$("#answerForm").find("select").attr("disabled", true); 
+			
+			// update number of problems the user completed
+			$("#numCompleted").html(index+1); 
+			
+			showFeedback(userChoice, correctChoice);
+			
+			console.log(userChoice);
+			
+			if(index === numOfProblems-1) { // the user completed all the problems 
+				$("#endGame").fadeIn(7000, function() {
+					this.scrollIntoView();
+				});
+				index  = 0; // reset 
+			}
+			else { // allow user to go next problem by clicking a button
+				nextButton.css("display", "block"); 
+			}
 		}
-		else { // allow user to go next problem by clicking a button
-			nextButton.css("display", "block"); 
+		else {
+			alert("You must select an answer choice.");
 		}
 	});
 }
