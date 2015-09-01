@@ -7,7 +7,7 @@
 	padding: 2em 0em; 
 }
 
-#opening h1 {
+#opening p {
 	color: white; 
 	font-size: 2em; 
 	width: 80%;
@@ -31,12 +31,25 @@
 	color: white; 
 }
 
-#problem-section {
-	padding: 3em;
+h1 { 
 	display: none; 
-	width: 60%; 
-	margin: 2em auto; 
+	text-align: center; 
+	color: rgba(0, 94, 255, 0.59); 
 }
+
+#problem-section {
+	padding: 0.5em 3em;
+	display: none; 
+	width: 70%; 
+	margin: 0em auto; 
+}
+
+#problem-section > h2 {
+	text-align: center;
+	text-decoration: underline; 
+}
+
+#answerForm {text-align: center;}
 
 #feedback {
 	border: 1px solid black; 
@@ -63,6 +76,11 @@ button[name=next] {
 #endGame button {
 	width: 5em;
 	margin: 0 0.5em 1em 0.5em; 
+}
+
+hr {
+	clear: right;
+	margin-top: 1em; 
 }
 
 #stats {
