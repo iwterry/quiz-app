@@ -170,9 +170,10 @@ function startQuiz(problems) {
 		
 		// Note: The reason index does not include 0 is because the "next" button does not appear until after the user has answered the first problem. 
 		
-		// the user should be able to click the submit button again and not see the next button; 
-		$("#answerForm").find("input[type='submit']").attr("disabled", false); 
-		nextButton.css("display", "none"); 
+		// at the next problem, the user should be able to select and submit his/her answer choice 
+		$("#answerForm").find("input[type='submit']").css("display", "inline-block");
+		$("#answerForm").find("select").attr("disabled", false);
+		$(this).css("display", "none"); 
 	}); 
 		
 	// the user can click to play the game again
@@ -194,20 +195,22 @@ function startQuiz(problems) {
 	$("#answerForm").submit(function(event) {
 		event.preventDefault(); 
 		
-		$("#answerForm").find("input[type='submit']").attr("disabled", true); // the user should not be able to immediately click the submit button again
-		$("#numCompleted").html(index+1); // since the user answered the question to the problem, update the number of problems that the user completed 
+		$("#answerForm").find("input[type='submit']").css("display", "none"); 
+		$("#answerForm").find("select").attr("disabled", true); 
+		
+		$("#numCompleted").html(index+1); // update the number of problems that the user completed 
 		userChoice = $("select option:selected").val(); // gets the letter choice the user selected 
 		showFeedback(userChoice, correctChoice);
 		
 		console.log(userChoice);
 		
-		if(index === numOfProblems-1) { // the user went through all the problems 
+		if(index === numOfProblems-1) { // the user completed all the problems 
 			$("#endGame").fadeIn(7000, function() {
 				this.scrollIntoView();
 			});
 			index  = 0; // reset 
 		}
-		else { // all user to go next problem by clicking a button
+		else { // allow user to go next problem by clicking a button
 			nextButton.css("display", "block"); 
 		}
 	});
