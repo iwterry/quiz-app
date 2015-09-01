@@ -4,12 +4,17 @@ $(document).ready(function() {
 		$("#opening").css("display", "none");
 		$("#problem-section").css("display", "block"); 
 		
-		// create the problems the user will need to solve
-		var quizProblem1 = new quizProblem("How old am I?", [22, 23, 16, 27], 27); 
-		var quizProblem2 = new quizProblem("Where am I from?", ["Gary", "Chicago", "Detroit"], "Gary"); 
-		var quizProblem3 = new quizProblem("Do I love mathematics?", ["Yes", "No"], "Yes"); 
+		// create the problems about Thinkful for the user to solve
+		var quizProblem1 = new quizProblem("In what year was Thinkful founded?", [2009, 2010, 2012, 2013], 2013); 
+		var quizProblem2 = new quizProblem("Who is not a listed as a co-founder of Thinkful?", ["Darrell Silver", "Dan Friedman", "Andrew Ng"], "Andrew Ng"); 
+		var quizProblem3 = new quizProblem("Which statement about Thinkful is false?", ["Thinkful has a course that teaches only frontend web development.", 
+			"Thinkful has a course that teaches only C programming.", "Thinkful offers 1-on-1 mentoring for more than five different courses."], 
+			"Thinkful has a course that teaches only C programming."); 
+		var quizProblem4 = new quizProblem("What is the highest price charged monthly by Thinkful for any 1-on-1 course (not including any career paths)?",
+			["$300", "$500", "$800", "$1000"], "$500"); 
+		var quizProblem5 = new quizProblem("Does Thinkful's 1-on-1 courses allow for flexible learning goals and schedules?", ["Yes", "No"], "Yes"); 
 		
-		quizProblems = getAllProblems(quizProblem1, quizProblem2, quizProblem3); 
+		quizProblems = getAllProblems(quizProblem1, quizProblem2, quizProblem3, quizProblem4, quizProblem5); 
 		startQuiz(quizProblems);
 	});
 });
@@ -52,11 +57,11 @@ function getAllProblems() {
 }
 
 function showProblem(problem) {
-	var h2 = document.createElement("h2"); // a h2 element
-	var ol = document.createElement("ol"); // a ol element
-	var select = document.createElement("select"); // a select element
+	var h2 = document.createElement("h2"); 
+	var ol = document.createElement("ol"); 
+	var select = document.createElement("select");
 	var alphabets = "abcdefghijklmnopqrstuvwxyz"; // something used to help the user select among the answer choices by choosing a lowercase letter
-	var correctChoice; // will be the letter of the correct answer to the problem
+	var correctChoice; 
 
 	
 	
