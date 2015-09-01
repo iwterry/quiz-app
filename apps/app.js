@@ -221,7 +221,7 @@ function startQuiz(problems) {
 			}
 		}
 		else {
-			alert("You must select an answer choice.");
+			alert("You must select a letter.");
 		}
 	});
 }
