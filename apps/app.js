@@ -1,26 +1,28 @@
 $(document).ready(function() {
 	$("#opening button").click(function() {
-		 // hide the opening message and show section that will contain the problems and allow user to solve them 
+		// create the problems about Thinkful for the user to solve
+		var quizProblem1 = new QuizProblem("In what year was Thinkful founded?", [2009, 2010, 2012, 2013], 2013),
+			quizProblem2 = new QuizProblem("Who is not listed as a co-founder of Thinkful?", ["Darrell Silver", "Dan Friedman", "Andrew Ng"], "Andrew Ng"),
+			quizProblem3 = new QuizProblem("Which statement about Thinkful is false?", ["Thinkful has a course that teaches only frontend web development.", 
+				"Thinkful has a course that teaches only C programming.", "Thinkful offers 1-on-1 mentoring for more than five different courses."], 
+				"Thinkful has a course that teaches only C programming."),
+			quizProblem4 = new QuizProblem("What is the highest price charged monthly by Thinkful for any 1-on-1 course (not including any career paths)?",
+				["$300", "$500", "$800", "$1000"], "$500"),
+			quizProblem5 = new QuizProblem("Do Thinkful's 1-on-1 courses allow for flexible learning goals and schedules?", ["Yes", "No"], "Yes"),
+			quizProblems = getAllProblems(quizProblem1, quizProblem2, quizProblem3, quizProblem4, quizProblem5); 
+
+		// hide the opening message and show section that will contain the problems and allow user to solve them 
 		$("#opening").css("display", "none");
+		$("h1").css("display", "block")
 		$("#problem-section").css("display", "block"); 
 		
-		// create the problems about Thinkful for the user to solve
-		var quizProblem1 = new quizProblem("In what year was Thinkful founded?", [2009, 2010, 2012, 2013], 2013); 
-		var quizProblem2 = new quizProblem("Who is not a listed as a co-founder of Thinkful?", ["Darrell Silver", "Dan Friedman", "Andrew Ng"], "Andrew Ng"); 
-		var quizProblem3 = new quizProblem("Which statement about Thinkful is false?", ["Thinkful has a course that teaches only frontend web development.", 
-			"Thinkful has a course that teaches only C programming.", "Thinkful offers 1-on-1 mentoring for more than five different courses."], 
-			"Thinkful has a course that teaches only C programming."); 
-		var quizProblem4 = new quizProblem("What is the highest price charged monthly by Thinkful for any 1-on-1 course (not including any career paths)?",
-			["$300", "$500", "$800", "$1000"], "$500"); 
-		var quizProblem5 = new quizProblem("Does Thinkful's 1-on-1 courses allow for flexible learning goals and schedules?", ["Yes", "No"], "Yes"); 
 		
-		quizProblems = getAllProblems(quizProblem1, quizProblem2, quizProblem3, quizProblem4, quizProblem5); 
 		startQuiz(quizProblems);
 	});
 });
 
-
-function quizProblem(question, answerChoices, correctAnswer) {
+/* Create an object the question, answer choices, and the correct answer for a quiz problem. */ 
+function QuizProblem(question, answerChoices, correctAnswer) {
 	/* 
 		question is a string representing the question the user is suppose to answer.
 		answerChoices is an array of strings/numbers/booleans that represent the choices the user has to answer the question. 
@@ -31,21 +33,20 @@ function quizProblem(question, answerChoices, correctAnswer) {
 	this.correctAnswer = correctAnswer; 
 }
 
+/* Gather all QuizProblem instances that were created into an array and return that array. */
 function getAllProblems() {
-	// Any arguments passed to this function should be a quizProblem object.
-	// Returns an array of all the arguments in the order presented in the argument list with each having an added 
-	//		property called num, which identifies the problem number that will be used to distinguish one problem from another. 
+	// Any arguments passed to this function should be a QuizProblem object.
+	// Returns an array of all the arguments in the order presented in the argument list.
 	
-	var args = arguments;
-	var problems = [];
+	var args = arguments,
+		problems = [];
 	
 	if (args.length === 0) {
 		console.log("getAllProblems needs at least one argument");
 	}
 	else {
 		$.each(args, function(index, problem) { 
-			if (problem instanceof quizProblem) {
-				problem.num = "Problem " + (index + 1); // gives the problem number
+			if (problem instanceof QuizProblem) {
 				problems.push(problem); 
 			}
 			else {
@@ -56,66 +57,68 @@ function getAllProblems() {
 	return problems
 }
 
-function showProblem(problem) {
-	var h2 = document.createElement("h2"); 
-	var ol = document.createElement("ol"); 
-	var select = document.createElement("select");
-	var alphabets = "abcdefghijklmnopqrstuvwxyz"; // something used to help the user select among the answer choices by choosing a lowercase letter
-	var correctChoice; 
+/* 	Allow the user to see problem number, question, answer choices, and a place to
+		 submit his/her choice. Return the correct answer for the given problem. */
+function showProblem(problem, num) {
+	// problem is an instance of QuizProblem
+	// num is an integer that represents the problem number
+	
+	var h2 = document.createElement("h2"),
+		ol = document.createElement("ol"),
+		select = document.createElement("select"),
+		alphabets = "abcdefghijklmnopqrstuvwxyz", // something used to help the user select among the answer choices by choosing a lowercase letter
+		correctChoice; 
+	
+	$(h2).text(problem.question) 
 
+	// changing marker type of the ordered list to be lowercase letters
+	$(ol).attr("type", "a") 
 	
-	
-	$(h2).html("<div>" + problem.num + "</div> " + problem.question) // have the problem question be a h1 element
-		 .find("div").css({
-			color: "gray",
-			"text-decoration": "underline",
-			"text-align": "center"
-		}); 
-	
-	$(ol).attr("type", "a") // changing marker type so that the items are numbered with lowercase letters
+	$(select).attr("required", true)
+			 .css("margin-right", "2em")
+			 .append("<option value=''>Select Letter</option>");
 	 
-	
 	$.each(problem.answerChoices, function(index, option) {
 		$(ol).append("<li>" + option + "</li>");
 		$(select).append("<option value=" + alphabets.charAt(index) + " >" + alphabets.charAt(index) + " </option>");
 		if(option === problem.correctAnswer) {
 			correctChoice = alphabets.charAt(index); 
 		}
-	});
-
+	});	
 	
-		   
-	// the user will be able to see the question, the answer choices, and a place to submit his/her choice. 
-	$(".question").append(h2);		  
-	$(".answerChoices").append(ol);		   
+	
+	
+	$("#question").append(h2);		  
+	$("#answerChoices").append(ol);		   
 	$("#answerForm").append(select)
-					.append("<input type=submit value=submit>");
-					
-					
-					
+					.append("<input type=submit value=Submit>");
+	$("#problemNumber").html(num); 				
+								
+	
 	return correctChoice; 
 }
 
 
-function removeProblem() { // remove problem from the DOM and hide feedback  
-
+// Remove problem from the DOM and hide feedback  message.
+function removeProblem() { 
 	$("#answerForm").children().remove();
-	$(".answerChoices").children().remove();
-	$(".question").children().remove();
+	$("#answerChoices").children().remove();
+	$("#question").children().remove();
 	$("#feedback").css("display", "none");  
 }
 
-
-function showFeedback(userChoice, correctChoice) { // tell the user whether he/she submitted the correct choice and updates the number correctly answered problems if necessary
+/* Give the user feedback as to whether he/she submitted the correct choice and update 
+		the number of correctly answered problems if necessary. */
+function showFeedback(userChoice, correctChoice) { 
 		// userChoice is the selection the user made 
 		// correctChoice is the correct answer to the question of the problem
 
-		var result;
-		var color; 
+		var result,
+			color; 
 		
 		if(correctChoice === userChoice) { // the user got the problem right 
-			var numCorrect = $("#numCorrect"); // used to make things a little easier for making changes 
-			numCorrect.html(+numCorrect.text() + 1); // update the number of problems the user has got correct
+			var numCorrect = $("#numCorrect"); 
+			numCorrect.html(+numCorrect.text() + 1); 
 			result = "right";
 			color = "green";
 			
@@ -131,7 +134,7 @@ function showFeedback(userChoice, correctChoice) { // tell the user whether he/s
 					
 		$("#correctAnswer").html("(" + correctChoice + ").");
 		
-		$("#feedback").css({// show feedback message
+		$("#feedback").css({
 			display: "block",
 			"text-align": "center"
 		}); 
@@ -139,27 +142,31 @@ function showFeedback(userChoice, correctChoice) { // tell the user whether he/s
 		
 }
 
+/* Allow the user to play the game */
 function startQuiz(problems) {
-	var index = 0;
-	var nextButton = $("#problem-section").find("button[name='next']"); // the button element that allows the user to go to the next question
-	var playAgainButton = $("#endGame").find("button[name='play-again']"); // the button element that allows the user to play the game again
-	var quitButton = $("#endGame").find("button[name='quit']"); // the button element that allows the user to quit the game
-	var numOfProblems = problems.length; 
-	var problem = problems[index];
-	var correctChoice = showProblem(problem); // the correct letter to the given problem
-	var userChoice; // will be the letter the user selected
-  
+	// problems is an array of instances of QuizProblem
 	
-	$("#stats").css("display", "block") // allow the user to see his/her playing statistics. 
-			   .find("#total").html(numOfProblems); //will show the total number of problems so the user can see on the html webpage
-			   
-	nextButton.click(function() { // the user is clicked to go to the next problem
+	var index = 0,
+		nextButton = $("#problem-section").find("button[name='next']"), 
+		playAgainButton = $("#endGame").find("button[name='play-again']"),
+		quitButton = $("#endGame").find("button[name='quit']"),
+		numOfProblems = problems.length,
+		correctChoice = showProblem(problems[index], index+1), 
+		userChoice; // will be the letter the user selected
+  
+	// allow the user to see his/her playing statistics. 
+	$("#stats").css("display", "block") 
+			   .find("#total").html(numOfProblems); 
+	
+
+	// the user can click to go to the next problem
+	nextButton.click(function() { 
 		// remove current problem and the feedback for the current problem 
 		removeProblem();
 		
 		// get and show the next problem for the user to solve
 		index += 1;
-		correctChoice = showProblem(problems[index]);
+		correctChoice = showProblem(problems[index], index+1);
 		
 		// Note: The reason index does not include 0 is because the "next" button does not appear until after the user has answered the first problem. 
 		
@@ -168,20 +175,22 @@ function startQuiz(problems) {
 		nextButton.css("display", "none"); 
 	}); 
 		
-
-	playAgainButton.click(function() { // allow user to play the game again
+	// the user can click to play the game again
+	playAgainButton.click(function() { 
 		removeProblem();// remove the last problem from the previous game
-		correctChoice = showProblem(problems[0]); //show the first problem for this game
-		$("#numCorrect").html(0); // since this will be a new game, the user has not answered any questions correctly 
-		$("#numCompleted").html(0); // and the user has not completed any problems in this new game. 
-		$(this).parent().css("display", "none"); // the user no longer needs to decide whether to play again or quit
+		correctChoice = showProblem(problems[0], 1); 
+		$("#numCorrect").html(0); 
+		$("#numCompleted").html(0); 
+		$(this).parent().css("display", "none"); 
 	});
 	
-	quitButton.click(function() { // allow user to quit the game
+	// the user can click to end the game
+	quitButton.click(function() { 
 		alert("Thanks for playing. Please close this tab in your browser."); 
-		$("body").remove() // remove everything and just show a clear white background
+		$("body").remove() 
 	}); 
 	
+	// the user can submit the answer choice
 	$("#answerForm").submit(function(event) {
 		event.preventDefault(); 
 		
@@ -193,7 +202,7 @@ function startQuiz(problems) {
 		console.log(userChoice);
 		
 		if(index === numOfProblems-1) { // the user went through all the problems 
-			$("#endGame").fadeIn(5000); // allow the user to choose whether to play again or to quit
+			$("#endGame").fadeIn(5000);
 			index  = 0; // reset 
 		}
 		else { // all user to go next problem by clicking a button
